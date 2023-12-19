@@ -1,29 +1,26 @@
 class Solution {
 public:
     vector<int> findIntersectionValues(vector<int>& nums1, vector<int>& nums2) {
-        sort(nums1.begin(), nums1.end());
-        sort(nums2.begin(), nums2.end());
-        vector<int> ans(2, 0);
-        int i = 0, j = 0;
 
-        while(i<nums1.size() && j<nums2.size()){
-            if(nums1[i]==nums2[j]){
-                ans[0]++;
-                i++;
+        unordered_map<int,int> map1;
+        unordered_map<int,int> map2;
+        int count1 =0,count2=0;
+        for(int i=0;i<nums1.size();i++) map1[nums1[i]]++;
+         for(int i=0;i<nums2.size();i++) map2[nums2[i]]++;
+        for(auto it:nums1){
+            if(map2.count(it)>0){
+                count1++;
+                map2[it]--;
             }
-            else if(nums1[i]<nums2[j]) i++;
-            else j++;
         }
-        i=0,j=0;
-        while(i<nums1.size() && j<nums2.size()){
-            if(nums2[j]==nums1[i]){
-                ans[1]++;
-                j++;
+        
+  for(auto it:nums2){
+            if(map1.count(it)>0){
+                count2++;
+                map1[it]--;
             }
-            else if(nums1[i]<nums2[j]) i++;
-            else j++;
-            
         }
-        return ans;
+return {count1,count2};
+
     }
 };
