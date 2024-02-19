@@ -1,16 +1,19 @@
 class Solution {
 public:
     int removeAlmostEqualCharacters(string word) {
-        int count = 0;
-        if (word.size() == 1 || word.size() == 0) return 0;
+        int steps=0;
         int i=0;
-        while(i<word.size()-1){
-             if (abs(word[i] - word[i + 1]) == 1 || abs(word[i] - word[i + 1]) == 0) {
-                count++;
-                i++;
-             }
-             i++;
+        while(i<word.size()){
+            char a = word[i];
+            char b = word[i+1];
+            if(abs(a-b)<=1){
+                steps++;
+                i+=2;
+            }
+            else i++;
+
         }
-        return count;
+        return steps;
+        
     }
 };
