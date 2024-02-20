@@ -1,31 +1,28 @@
 class Solution {
 public:
-    void nextPermutation(vector<int>& a) {
-       int ind=-1;
-       int n=a.size();
-        for(int i=n-2;i>=0;i--)
-        {
-            if(a[i]<a[i+1])
-            {
-               ind=i;
+    void nextPermutation(vector<int>& nums) {
+        int index=-1;
+        for(int i=nums.size()-2;i>=0;i--){
+            if(nums[i]<nums[i+1]){
+                index=i;
                 break;
             }
         }
-        if(ind==-1)
-        {
-            reverse(a.begin(),a.end());
+        if (index == -1) {
+            reverse(nums.begin(), nums.end());  
             return;
         }
-        for(int i=n-1;i>ind;i--)
-    {
-            if(a[i]>a[ind])
-        {
-            swap(a[i],a[ind]);
-            break;
+        for(int j=nums.size()-1;j>index;j--){
+            if(nums[j]>nums[index]){
+                 swap(nums[j],nums[index]); 
+                 break;
+            }
         }
-    }
-        reverse(a.begin()+ind+1,a.end());
-       
+        reverse(nums.begin()+index+1,nums.end());
 
+        
+
+        
+        
     }
 };
