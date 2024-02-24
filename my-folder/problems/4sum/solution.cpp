@@ -1,37 +1,40 @@
 class Solution {
 public:
-    vector<vector<int>> fourSum(vector<int>& arr, int k) {
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        int n = nums.size();
+        sort(nums.begin(),nums.end());
         vector<vector<int>> ans;
-        int n = arr.size();
         if(n==0) return ans;
-        sort(arr.begin(),arr.end());
-        for(int i=0;i<n;i++){
-            for(int j=i+1;j<n;j++){
-                long long int target2;
-                target2 = k;
-                target2-=arr[i];
-                target2-=arr[j];
-                int left = j+1,right = n-1;
-                while(left<right){
-                    if(arr[left]+arr[right]<target2) left++;
-                    else if(arr[left]+arr[right]>target2) right--;
+        for(int i=0;i<n-3;i++){
+            for(int j=i+1;j<n-2;j++){
+                long long diff = (long long)target -(long long)(nums[i]+nums[j]);
+                int low = j+1, high = n-1;
+                while(low<high){
+                    long long sum = nums[low]+nums[high];
+                    if(sum>diff) high--;
+                    else if(sum<diff) low++;
                     else{
                         vector<int> row(4,0);
-                        row[0]=arr[i];
-                        row[1]=arr[j];
-                        row[2]=arr[left];
-                        row[3]=arr[right];
+                        row[0]=nums[i];
+                        row[1]=nums[j];
+                        row[2]=nums[low];
+                        row[3]=nums[high];
                         ans.push_back(row);
-                        
-                        while(left<right && arr[left]==row[2]) left++;
-                        while(left<right && arr[right]==row[3]) right--;
+                        while(low<high && nums[low]==row[2]) low++;
+                        while(low<high && nums[high]==row[3]) high--;
+
                     }
                 }
-                while(j+1<n && arr[j+1]==arr[j]) j++;
+                while(j+1<n && nums[j+1]==nums[j]) j++;
             }
-            while(i+1<n && arr[i+1]==arr[i]) i++;
+            while(i+1<n && nums[i+1]==nums[i]) i++;
         }
         return ans;
+
+           
+            
+
+        
         
     }
 };
