@@ -1,24 +1,12 @@
 class Solution {
 public:
     void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
-        int idx1=m-1,idx2=n-1,x=m+n-1;
-        while( idx1>=0 && idx2>=0 )
-        {
-            if(nums1[idx1]>=nums2[idx2])
-            {
-                nums1[x--]=nums1[idx1--];
-            }
-            else
-            {
-                nums1[x--]=nums2[idx2--];
-            }
+        int i=m-1,j=n-1,x=m+n-1;
+        while(i>=0 && j>=0){
+            if(nums1[i]>=nums2[j]) nums1[x--]=nums1[i--];
+            else nums1[x--]=nums2[j--];
         }
-        while(idx2>=0)
-        {
-            nums1[x--]=nums2[idx2--];
-
-        }
-        
+        while(j>=0) nums1[x--]=nums2[j--];
         
         
     }
