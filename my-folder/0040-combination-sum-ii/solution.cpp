@@ -1,23 +1,23 @@
 class Solution {
 public:
-    vector<vector<int>> ans;
-    void recursion(vector<int>& c,vector<int>& set,int i,int sum,int target){
+    void recursion(vector<int> &candidates,vector<vector<int>>& ans,vector<int>temp,int i,int sum, int target){
         if(sum==target){
-            ans.push_back(set);
+            ans.push_back(temp);
             return;
         }
-        if(sum>target||i==c.size()) return;
-        for (int j = i; j < c.size(); ++j) {
-            if (j > i && c[j] == c[j - 1]) continue; 
-            set.push_back(c[j]);
-            recursion(c, set, j + 1, sum + c[j], target);
-            set.pop_back();
+        if(sum>target || i==candidates.size()) return;
+        for(int j=i;j<candidates.size();j++){
+            if (j != i && candidates[j] == candidates[j - 1])continue;
+            temp.push_back(candidates[j]);
+            recursion(candidates,ans,temp,j+1,sum+candidates[j],target);
+            temp.pop_back();
         }
     }
     vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
-        vector<int> set;
+        vector<vector<int>> ans;
         sort(candidates.begin(),candidates.end());
-        recursion(candidates,set,0,0,target);
+        recursion(candidates,ans,{},0,0,target);
         return ans;
+
     }
 };
