@@ -1,38 +1,38 @@
 class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int count = 0;
-        int x=0,y=0;
-        int n = nums1.length+nums2.length;
-        int medianInd1 = n/2;
-        int medianInd2 = medianInd1-1;
-        double median1=0,median2=0;
-        while(x<nums1.length && y<nums2.length){
-            if(nums1[x]<nums2[y]){
-                if(count==medianInd1) median1=nums1[x];
-                if(count==medianInd2) median2=nums1[x];
-                x++;
-            }
-            else{
-                if(count==medianInd1) median1=nums2[y];
-                if(count==medianInd2) median2=nums2[y];
-                y++;
-            }
-            count++;
-        }
-        while(x<nums1.length){
-            if(count==medianInd1) median1=nums1[x];
-            if(count==medianInd2) median2=nums1[x];
-            x++;
-            count++;
-
-        }
-        while(y<nums2.length){
-            if(count==medianInd1) median1=nums2[y];
-            if(count==medianInd2) median2=nums2[y];
-            y++;
-            count++;
-        }
-        return n%2==0?(median1+median2)/2.0:median1;
+        int n1 = nums1.length;
+        int n2 = nums2.length;
         
+        if (n1 > n2) {
+            return findMedianSortedArrays(nums2, nums1);
+        }
+
+        int left = 0, right = n1;
+        int part = (n1 + n2 + 1) / 2;
+
+        while (left <= right) {
+            int mid1 = (left + right) >> 1;
+            int mid2 = part - mid1;
+
+            int l1 = (mid1 == 0) ? Integer.MIN_VALUE : nums1[mid1 - 1];
+            int l2 = (mid2 == 0) ? Integer.MIN_VALUE : nums2[mid2 - 1];
+            int r1 = (mid1 == n1) ? Integer.MAX_VALUE : nums1[mid1];
+            int r2 = (mid2 == n2) ? Integer.MAX_VALUE : nums2[mid2];
+
+            if (l1 <= r2 && l2 <= r1) {
+                if ((n1 + n2) % 2 == 0) {
+                    return (Math.max(l1, l2) + Math.min(r1, r2)) / 2.0;
+                } else {
+                    return Math.max(l1, l2);
+                }
+            } else if (l1 > r2) {
+                right = mid1 - 1;
+            } else {
+                left = mid1 + 1;
+            }
+        }
+
+        return 0.0;
     }
 }
+
