@@ -12,8 +12,8 @@ public:
     }
 
     long long repairCars(vector<int>& ranks, int cars) {
-        ll left = 0, right = (ll)ranks[0] * cars * cars, ans = 0;
         sort(ranks.begin(), ranks.end()); 
+        ll left = 1, right = (ll)ranks[0] * cars * cars, ans = 0;
 
         while (left <= right) {
             ll mid = left + (right - left) / 2;
