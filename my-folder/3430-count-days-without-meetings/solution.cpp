@@ -1,20 +1,23 @@
 class Solution {
 public:
     int countDays(int days, vector<vector<int>>& meetings) {
-        sort(meetings.begin(),meetings.end());
-        vector<vector<int>> merged;
-        for(vector<int> v:meetings){
-            if(merged.empty() || merged.back()[1]<v[0]){
-                merged.push_back(v);
-            }
-            else if(merged.back()[1]>=v[0] && merged.back()[1]<=v[1] ){
-                merged.back()[1]=v[1];
-            }
+        map<int, int> mpp;
+        for(auto &it : meetings){
+            int u = it[0], v = it[1];
+            mpp[u]++;  
+            mpp[v + 1]--;  
         }
-        int diff=0;
-        for(vector<int> v:merged){
-            diff+=v[1]-v[0]+1;
+
+        int count = 0, score = 0, prev = 1;
+        for (auto &[day, change] : mpp) {
+            if (prev < day && score == 0) {
+                count += day - prev;
+            }
+            score += change;
+            prev = day;
         }
-        return days-diff;
+
+        if (prev <= days) count += (days - prev + 1);
+        return count;
     }
 };
